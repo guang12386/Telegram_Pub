@@ -37,7 +37,7 @@ git clone https://github.com/你的项目地址.git
 cd 项目目录
 ```
 
-- 或将本项目压缩包下载后上传至服务器（推荐使用 [FinalShell](https://www.hostbuf.com/t/921.html) 远程连接），直接拖动文件夹即可。
+- 或将本项目压缩包下载后上传至服务器（推荐使用 [FinalShell](https://www.hostbuf.com/) 远程连接），直接拖动文件夹即可。
 
 > ❗ 不会在服务器上解压也没关系，可以在本地解压后上传到服务器。
 
@@ -62,7 +62,7 @@ source venv/bin/activate
 > 📌 **提示：每次启动前都需要激活虚拟环境：**
 
 ```bash
-cd 项目目录
+cd
 source venv/bin/activate
 ```
 
@@ -72,14 +72,6 @@ source venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
-```
-
-`requirements.txt` 示例：
-
-```txt
-pyrogram
-tgcrypto
-watchdog
 ```
 
 ---
@@ -102,7 +94,7 @@ watchdog
 
 ```
 你好=好你木不会说事吗
-在吗=我在的喵~
+在吗=我在的~
 天气=今天天气晴朗 ☀️
 ```
 
@@ -156,16 +148,6 @@ nohup python del.py &
 
 - Telegram 联系人：[http://t.me/guang8886667](http://t.me/guang8886667)
 - 邮箱地址：`guang8886667@gmail.com`
-
----
-
-## 🌟 项目计划与后续功能
-
-- ✅ 热更新关键词 / 配置（已支持）
-- ⏳ 关键词限频回复
-- 🎯 正则关键词匹配
-- 📊 消息记录与数据分析
-- 📎 支持自动回复表情 / 图片 / 超链接
 
 ---
 
