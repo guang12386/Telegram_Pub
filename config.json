@@ -1,0 +1,14 @@
+{
+  "_comment1": "API信息从 https://my.telegram.org 获取,获取失败请联系@guang8886667请求帮助",
+  "api_id": 12345687,
+  "api_hash": "your_api_hash_here",
+
+  "_comment2": "是否允许在群组中启用自动回复，默认是启用，不启用则输入false",
+  "enable_group": true,
+
+  "_comment3": "是否忽略自己说的话，默认为启用",
+  "ignore_self": true,
+
+  "_comment4": "排除的用户ID列表，用户ID写进去就不会检测然后自动回复这个用户的信息了，ID信息可以用机器人@userinfobot获取",
+  "excluded_user_ids": [ ]
+}
