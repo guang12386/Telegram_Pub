@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="[阿强的酒馆](https://img.st/image/photo-2025-06-16-02-42-32.jV0s)" width="400"/>
+</p>
+
 # 🍺 Pub酒馆 - 打造你的 Telegram 账号助手
 
 > 基于 Python 的 Telegram 用户自动回复系统，关键词监听 + 实时热更新，快速打造你的专属账号助手！本项目完全开源不会有任何风险，请放心食用！
