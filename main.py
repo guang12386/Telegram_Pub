@@ -2,15 +2,16 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import json, os, time, threading
+import json, os, threading
 
-CONFIG_PATH = "config.json"
-REPLY_PATH = "reply.txt"
-SESSION_NAME = "hello_Pub"
+CONFIG_PATH = os.path.abspath("config.json")
+REPLY_PATH = os.path.abspath("reply.txt")
+SESSION_NAME = "888"
 
 # ========== 全局变量 ==========
 config = {}
 reply_dict = {}
+me_user = None  # 缓存自己的信息
 
 # ========== 加载配置 ==========
 def load_config():
@@ -33,18 +34,18 @@ def load_replies():
 # ========== 监听文件变化 ==========
 class ChangeHandler(FileSystemEventHandler):
     def on_modified(self, event):
-        if event.src_path.endswith("config.json"):
+        if event.src_path == CONFIG_PATH:
             load_config()
-        elif event.src_path.endswith("reply.txt"):
+        elif event.src_path == REPLY_PATH:
             load_replies()
 
 def start_file_watch():
     event_handler = ChangeHandler()
     observer = Observer()
-    observer.schedule(event_handler, ".", recursive=False)
+    observer.schedule(event_handler, path=os.path.dirname(CONFIG_PATH), recursive=False)
     observer.start()
-    print("📡 开始监听 config.json 和 reply.txt 变更")
-    threading.Thread(target=observer.join).start()
+    print("📡 精准监听 config.json 和 reply.txt 的变更")
+    return observer
 
 # ========== 初始化 ==========
 load_config()
@@ -53,11 +54,12 @@ app = Client(SESSION_NAME, api_id=config["api_id"], api_hash=config["api_hash"])
 
 @app.on_message(filters.text)
 async def auto_reply(client, message):
-    if message.edit_date is not None:
-        return
+    global me_user
 
-    me = await client.get_me()
-    if config.get("ignore_self", True) and message.from_user and message.from_user.id == me.id:
+    if me_user is None:
+        me_user = await client.get_me()  # 第一次才获取一次
+
+    if config.get("ignore_self", True) and message.from_user and message.from_user.id == me_user.id:
         return
 
     if message.from_user and message.from_user.id in set(config.get("excluded_user_ids", [])):
@@ -73,6 +75,13 @@ async def auto_reply(client, message):
 
 # ========== 启动 ==========
 if __name__ == "__main__":
-    start_file_watch()
+    observer = start_file_watch()
     print("🚀 程序启动，等待消息中...")
-    app.run()
+    try:
+        app.run()
+    except KeyboardInterrupt:
+        print("🛑 用户终止程序，正在退出...")
+    finally:
+        observer.stop()
+        observer.join()
+        print("✅ 文件监听器已关闭")
